@@ -1,0 +1,111 @@
+{% if form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+        {{form.non_field_errors}}
+    </div>
+{% endif %}
+
+<form method="post" action=".">
+    {% csrf_token %}
+    <div class="form-group row">
+        <label class="col-sm-2" for="{{form.name.id_for_label}}">Name</label>
+        <div class="col-sm-10">
+            {{form.name}}
+            {% if form.name.help_text %}
+                <small class="form-text text-muted">{{form.name.help_text|safe}}</small>
+            {% endif %}
+
+            {% if 'name' in form.errors %}
+                <div class="invalid-feedback">
+                {% for error in form.name.errors %}
+                    <p>{{error}}</p>
+                {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2" for="{{form.age.id_for_label}}">Age</label>
+        <div class="col-sm-10">
+            {{form.age}}
+            {% if form.age.help_text %}
+                <small class="form-text text-muted">{{form.age.help_text|safe}}</small>
+            {% endif %}
+
+            {% if form.age.errors %}
+                <div class="invalid-feedback">
+                {% for error in form.age.errors %}
+                    <p>{{error}}</p>
+                {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">Gender</div>
+        <div class="col-sm-10">
+            {% for gender in form.gender %}
+                <div class="form-check form-check-inline">
+                    {{ gender.tag }}
+                    <label class="form-check-label" for="{{ gender.id_for_label }}">{{ gender.choice_label }}</label>
+                </div>
+            {% endfor %}
+            {% if form.gender.help_text %}
+                <small class="form-text text-muted">{{form.gender.help_text|safe}}</small>
+            {% endif %}
+
+            {% if form.gender.errors %}
+                <div class="invalid-feedback">
+                {% for error in form.gender.errors %}
+                    <p>{{error}}</p>
+                {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2" for="{{form.email.id_for_label}}">Email</label>
+        <div class="col-sm-10">
+            {{form.email}}
+            {% if form.email.help_text %}
+                <small class="form-text text-muted">{{form.email.help_text|safe}}</small>
+            {% endif %}
+
+            {% if form.email.errors %}
+                <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                    <p>{{error}}</p>
+                {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">School</div>
+        <div class="col-sm-10">
+            {{form.school}}
+            {% if form.school.help_text %}
+                <small class="form-text text-muted">{{form.school.help_text|safe}}</small>
+            {% endif %}
+
+            {% if form.school.errors %}
+                <div class="invalid-feedback">
+                {% for error in form.school.errors %}
+                    <p>{{error}}</p>
+                {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">Is Active</div>
+        <div class="col-sm-10">
+            <div class="form-check">
+                {{ form.is_active }}
+                {% if form.is_active.help_text %}
+                    <small class="form-text text-muted">{{form.is_active.help_text|safe}}</small>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success col-sm-4 offset-sm-4">Submit</button>
+</form>
