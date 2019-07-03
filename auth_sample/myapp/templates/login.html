@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content%}
+<h1>welcome</h1>
+<form action="{% url 'myapp:home' %}" method="POST">
+    {% csrf_token %}
+    username:{{form.usern}}<br>
+    password:{{form.passw}}<br>
+<input type="submit">
+</form>
+<button><a href="{% url 'myapp:reguser'%}">register</a></button>
+{% endblock %}

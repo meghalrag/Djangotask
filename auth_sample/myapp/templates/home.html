@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content%}
+<h1>home</h1>
+<button><a href="{% url 'myapp:logoutuser'%}">logout</a></button>
+<button><a href="{% url 'myapp:edituser' userid %}">edit</a></button>
+{% endblock %}

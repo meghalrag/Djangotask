@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content%}
+<form action='{% url 'myapp:reguser' %}' method="POST">
+    {% csrf_token %}
+        {{form.username}}
+        {{form.email}}
+        {{form.passw}}
+        {{form.confirmpassw}}
+        <br>
+        <input type="submit" class="btn btn-info">
+    </form>
+{% endblock %}
