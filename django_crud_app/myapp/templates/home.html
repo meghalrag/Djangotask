@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <style>
+                table {
+                  font-family: arial, sans-serif;
+                  border-collapse: collapse;
+                  width: 100%;
+                }
+                
+                 th {
+                  background-color: blueviolet;
+                  border: 1px solid #6d2f2f;
+                  text-align: left;
+                  padding: 8px;
+                }
+                td{
+                  border: 1px solid #6d2f2f;
+                  text-align: left;
+                  padding: 8px;
+                }
+                
+                tr:nth-child(even) {
+                  background-color: #6ef5d8;
+                }
+        </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+  <br>
+  {% for message in messages %}
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+{% endfor %}
+    
+        
+        <br>
+        <table class="container">
+          <tr>
+            <td><button type="button" style="float: right;" class="btn btn-info"><a style="color:aliceblue;" href="{% url 'user:logoutuser' %}">logout</a></button>
+            </th> </tr>
+        <tr>
+            <th>Name</th>
+            <th>Email_ID</th>
+            <th>Action</th>
+        </tr>
+        {% for i in obj %}
+        <tr>
+          {% csrf_token%}
+            <td>{{i.name}}</td>
+            <td>{{i.email}}</td>
+            
+            <td> <button id="myBtnedit"class="btn btn-success"><a style="color:white" href="{% url 'user:viewuser' i.id %}">View</a></button>
+              {% if i.FK_LoginDB.id == userid %}
+              <button id="myBtnedit"class="btn btn-primary"><a style="color:white" href="{% url 'user:edituser' i.id %}">Edit</a></button>
+              <button id="myBtn"class="btn btn-danger student-delete"><a style="color:white" href="{% url 'user:deleteuser' i.id %}">delete</a></button>
+              {% endif%}
+            </td>
+            {% endfor %}
+        </tr>
+        </table>
+
+        <script>
+            $('.student-delete').click(function(e){
+                if (!confirm('Are you sure about deleting this student?')) {
+                    e.preventDefault()
+                }
+            })
+        </script>
+</body>
+</html>
