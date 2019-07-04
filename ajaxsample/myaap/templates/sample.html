@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("#lv").click(function(){
+        $.ajax({
+            url: "getajax", 
+            success: function(name){
+                console.log(typeof(name))
+            if(name){
+                // for (i=0;i<name.length;i++){
+                // $("#li"+i).html(name[i]);
+                var obj=JSON.parse(name)
+                $("#mylist").append("<li>"+obj.email+"</li>")
+                // $("#mylist").append("<li>"+obj.email+"</li>")
+                // $("#mylist").append("<li>"+name.passwod+"</li>")
+                
+                // }
+            }
+            }  
+        });
+        });
+    });
+    </script>
+
+
+    <title>Document</title>
+</head>
+<body>
+    <h1><b>get your details from here</b></h1>
+    <button id='lv'>getajax</button>
+    <ul id="mylist" class="list-group" id="list-ul">
+            <!-- <li class="list-group-item" id="li0">First item</li> -->
+    </ul>
+</body>
+</html>

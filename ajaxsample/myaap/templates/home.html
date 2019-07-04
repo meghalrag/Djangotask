@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("#lv").click(function(){
+        $.ajax({
+            url: "getajax", 
+            success: function(name){
+                console.log(typeof(name))
+            if(name){
+                // for (i=0;i<name.length;i++){
+                // $("#li"+i).html(name[i]);
+                var obj=JSON.parse(name)
+                $("#mylist").append("<li>"+obj.name+"</li>")
+                $("#mylist").append("<li>"+obj.age+"</li>")
+                $("#mylist").append("<li>"+obj.gender+"</li>")
+                // }
+            }
+            }  
+        });
+        });
+    });
+    </script>
+
+</head>
+<body>
+    <form action="{% url 'home'%}" method="POST">
+        {% csrf_token %}
+        <input type="text" placeholder="email" name="email">
+        <input type="text" placeholder="password" name="passw">
+        <input type="submit">
+    </form>
+    <button id='lv'>getajax</button>
+    <div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
+    <ul id="mylist" class="list-group" id="list-ul">
+            <!-- <li class="list-group-item" id="li0">First item</li> -->
+    </ul>
+</body>
+</html>
