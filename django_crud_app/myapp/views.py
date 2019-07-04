@@ -4,6 +4,7 @@ from django.db import connection,IntegrityError
 from django.contrib import messages
 from .forms import RegForm,LoginForm
 from .models import UserDB,LoginDB
+import json
 # from util.db import to_dict
 # Create your views here.
 def home(request):
@@ -114,12 +115,31 @@ def editfunc(request,user_id):
     # return render(request,'create.html',{'form':form})
 def viewfunc(request,user_id):
     # Executing raw sql queries
-    objlog=UserDB.objects.get(id=user_id)
+    # objlog=UserDB.objects.get(id=user_id)
+    # cursor=connection.cursor()
+    # cursor.execute("select name,email,gender,city,phone,qualification,dob from usertable where id=%s",[user_id])
+    # rs=cursor.fetchone()
+    # li=['name','email','gender','city','phone','qualification','dob']
+    # zipobj=zip(li,rs)
+    # obj=dict(zipobj)
+    # if objlog.FK_LoginDB.id==request.session['id']:
+    #     obj['username']=objlog.FK_LoginDB.username
+    #     obj['password']=objlog.FK_LoginDB.password
+    # else:
+    #     obj['username']='it is not visible'
+    #     obj['password']='it is not visible'
+    #converting to dict
+    # obj=to_dict(cursor,rs)
+
+    return render(request,'view.html',{'userid':user_id})
+def getajax(request):
+    data=request.GET.get('user_id')
+    objlog=UserDB.objects.get(id=data)
     cursor=connection.cursor()
-    cursor.execute("select name,email,gender,city,phone,qualification,dob from usertable where id=%s",[user_id])
+    cursor.execute("select name,email,gender,city,phone,qualification from usertable where id=%s",[data])
     rs=cursor.fetchone()
-    li=['name','email','gender','city','phone','qualification','dob']
-    zipobj=zip(li,rs)
+    li=['name','email','gender','city','phone','qualification',]
+    zipobj=zip(li,(rs))
     obj=dict(zipobj)
     if objlog.FK_LoginDB.id==request.session['id']:
         obj['username']=objlog.FK_LoginDB.username
@@ -127,8 +147,7 @@ def viewfunc(request,user_id):
     else:
         obj['username']='it is not visible'
         obj['password']='it is not visible'
-    #converting to dict
-    # obj=to_dict(cursor,rs)
+    name='ok'
+    obj=json.dumps(obj)
+    return HttpResponse(obj)
 
-    return render(request,'view.html',{'obj':obj})
-    
